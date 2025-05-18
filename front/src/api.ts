@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:5000/subjects";
+const baseURL = process.env.API_URL ?? "http://localhost:5000";
 
 export interface Subject {
   id?: string;
@@ -38,14 +38,14 @@ export const authApi = {
 
 export const api = {
   get: async () => {
-    const response = await fetch(`${baseURL}`, {
+    const response = await fetch(`${baseURL}/subjects`, {
       headers: getAuthHeaders(),
     });
     return response.json();
   },
 
   post: async (data: Subject) => {
-    const response = await fetch(`${baseURL}`, {
+    const response = await fetch(`${baseURL}/subjects`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       body: JSON.stringify(data),
@@ -54,7 +54,7 @@ export const api = {
   },
 
   put: async (data: Subject, id: string) => {
-    const response = await fetch(`${baseURL}/${id}`, {
+    const response = await fetch(`${baseURL}/subjects/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       body: JSON.stringify(data),
@@ -63,7 +63,7 @@ export const api = {
   },
 
   delete: async (id: string) => {
-    const response = await fetch(`${baseURL}/${id}`, {
+    const response = await fetch(`${baseURL}/subjects/${id}`, {
       method: "DELETE",
       headers: getAuthHeaders(),
     });
